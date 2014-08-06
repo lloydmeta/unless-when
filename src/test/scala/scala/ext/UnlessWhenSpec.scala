@@ -11,11 +11,15 @@ class UnlessWhenSpec extends FunSpec with Matchers {
   describe("when") {
 
     it("should return None if the predicate is false"){
-      when(4 < 2)(0) should be (None)
+      when (4 < 2)(0) should be (None)
     }
 
     it("should return Some(value) if the predicate is false"){
       when(4 > 2)(0) should be (Some(0))
+    }
+
+    it("should be 'lazy") {
+      when(4 < 2){ Iterator.from(0).sum} should be (None)
     }
 
   }
@@ -28,6 +32,10 @@ class UnlessWhenSpec extends FunSpec with Matchers {
 
     it("should return None if the predicate is true") {
       unless(4 > 2)(0) should be (None)
+    }
+
+    it("should be 'lazy") {
+      unless(4 > 2){ Iterator.from(0).sum} should be (None)
     }
   }
 
