@@ -10,7 +10,20 @@ doesn't get evaluated if the predicate is does not satisfy unless/when semantics
 
 ## Installing
 
-Coming soon ... (if you saw this message then please go outside and have some fun)
+Add the following to your `build.sbt`
+
+```scala
+libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.1"
+```
+
+If the above does not work because it cannot be resolved, its likely because it hasn't been synced to Maven central yet.
+In that case, download a SNAPSHOT release of the same version by adding this to `build.sbt`
+
+```scala
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
+libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.1-SNAPSHOT"
+```
 
 ## Example
 

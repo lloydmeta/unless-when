@@ -36,7 +36,7 @@ publishTo <<= version { v: String =>
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-organization := "com.beachape.unlesswhen"
+organization := "com.beachape.extensions"
 
 publishMavenStyle := true
 
