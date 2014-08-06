@@ -4,8 +4,7 @@ import scala.language.experimental.macros
 import scala.reflect.macros.Context
 
 /**
- * Your run of the mill unless and when macros that you cut your teeth on when learning
- * Lisp macros.
+ * Import the unless and when methods from here.
  */
 object UnlessWhen {
   /**
