@@ -19,7 +19,7 @@ class UnlessWhenSpec extends FunSpec with Matchers {
     }
 
     it("should be 'lazy") {
-      when(4 < 2){ Iterator.from(0).sum} should be (None)
+      when(4 < 2){ Iterator.from(0).sum } should be (None)
     }
 
   }
@@ -35,7 +35,7 @@ class UnlessWhenSpec extends FunSpec with Matchers {
     }
 
     it("should be 'lazy") {
-      unless(4 > 2){ Iterator.from(0).sum} should be (None)
+      unless(4 > 2){ Iterator.from(0).sum } should be (None)
     }
   }
 
