@@ -1,4 +1,4 @@
-# Unless-When extensions
+# Unless-When extensions [![Build Status](https://travis-ci.org/lloydmeta/unless-when.svg?branch=master)](https://travis-ci.org/lloydmeta/unless-when)
 
 `unless` and `when` macros for Scala 2.10+. 
 
