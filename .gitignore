@@ -5,14 +5,14 @@ target
 tmp
 .history
 dist
-/.idea
-/*.iml
-/out
-/.idea_modules
-/.classpath
-/.project
-/RUNNING_PID
-/.settings
+.idea
+*.iml
+out
+.idea_modules
+.classpath
+.project
+
+.settings
 
 #OSX
 .DS_Store

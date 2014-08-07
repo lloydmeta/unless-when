@@ -1,6 +1,6 @@
 name := "unless-when"
 
-version := "0.0.1"
+version := "0.0.2-SNAPSHOT"
 
 scalaVersion := "2.11.2"
 
@@ -9,6 +9,10 @@ crossScalaVersions := Seq("2.10.4", "2.11.2")
 crossVersion := CrossVersion.binary
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+
+lazy val unlessWhen = (project in file(".")).dependsOn(unlessWhenMacro)
+
+lazy val unlessWhenMacro = project
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
