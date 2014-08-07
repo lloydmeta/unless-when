@@ -6,7 +6,7 @@ import scala.reflect.macros.Context
 /**
  * Import the unless and when methods from here.
  */
-object UnlessWhenTrailing {
+object UnlessWhen {
 
   /**
    * Runs the function if the given predicate evaluates to true. Returns None if the predicate returns
@@ -36,16 +36,16 @@ object UnlessWhenTrailing {
    * Note that since the conversion is delegated to a macro, the computation of the result is
    * lazy (and won't happen unless the predicate satisfies unless/when semantics)
    */
-  implicit def toTrailingConditional[A](f: A): scala.ext.UnlessWhenTrailing.TrailingConditional[A] = macro toTrailingConditionalImpl[A]
+  implicit def toTrailingConditional[A](f: A): scala.ext.UnlessWhen.TrailingConditional[A] = macro toTrailingConditionalImpl[A]
 
-  def toTrailingConditionalImpl[A: c.WeakTypeTag](c: Context)(f: c.Expr[A]): c.Expr[scala.ext.UnlessWhenTrailing.TrailingConditional[A]] = {
+  def toTrailingConditionalImpl[A: c.WeakTypeTag](c: Context)(f: c.Expr[A]): c.Expr[scala.ext.UnlessWhen.TrailingConditional[A]] = {
     import c.universe._
     val resultType = implicitly[c.WeakTypeTag[A]].tpe
     val tree =
       q"""
          new TrailingConditional[${tq"$resultType"}] {
-           def when(p: Boolean) = UnlessWhenTrailing.when(p)($f)
-           def unless(p: Boolean) = UnlessWhenTrailing.unless(p)($f)
+           def when(p: Boolean) = UnlessWhen.when(p)($f)
+           def unless(p: Boolean) = UnlessWhen.unless(p)($f)
          }
        """
     c.Expr[TrailingConditional[A]](tree)

@@ -1,7 +1,6 @@
 package scala.ext
 
-
-import UnlessWhenTrailing._
+import UnlessWhen._
 import org.scalatest.{FunSpec, Matchers}
 
 /**
