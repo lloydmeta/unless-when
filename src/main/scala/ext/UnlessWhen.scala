@@ -44,8 +44,8 @@ object UnlessWhen {
     val tree =
       q"""
          new TrailingConditional[${tq"$resultType"}] {
-           def when(p: Boolean) = UnlessWhen.when(p)($f)
-           def unless(p: Boolean) = UnlessWhen.unless(p)($f)
+           def when(p: Boolean) = scala.ext.UnlessWhen.when(p)($f)
+           def unless(p: Boolean) = scala.ext.UnlessWhen.unless(p)($f)
          }
        """
     c.Expr[TrailingConditional[A]](tree)

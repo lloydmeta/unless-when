@@ -34,4 +34,12 @@ println(unless(4 > 2)(0))
 
 println(unless(4 > 2){ Iterator.from(0).sum })
 // #=> None
+
+// Trailing unless and whens are also available and lazy
+
+println(Iterator.from(0).sum when 4 < 2)
+// #=> None
+ 
+println(Iterator.from(0).sum unless 4 > 2)
+// #=> None
 ```
