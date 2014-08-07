@@ -16,15 +16,3 @@ out
 
 #OSX
 .DS_Store
-
-#Vagrant
-.vagrant
-vagrant_ansible_inventory_default
-tmp
-
-# Assets stuff
-.sass-cache
-node_modules
-
-# Ignore compiled assets
-/public

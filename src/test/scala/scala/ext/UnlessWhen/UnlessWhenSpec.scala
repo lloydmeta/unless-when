@@ -1,6 +1,5 @@
-package scala.ext
+package scala.ext.UnlessWhen
 
-import UnlessWhen._
 import org.scalatest.{FunSpec, Matchers}
 
 /**
@@ -8,7 +7,6 @@ import org.scalatest.{FunSpec, Matchers}
  */
 
 class UnlessWhenSpec extends FunSpec with Matchers {
-
 
   describe("when") {
 
