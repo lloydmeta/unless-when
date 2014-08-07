@@ -6,7 +6,7 @@ These are your run of the mill macros that you cut your teeth on when learning L
 to learn Scala macros with quasiquotes.
 
 In case it was non-obvious, since these are macros, the evaluation of the second argument (or the first in the trailing
-variations) is "lazy", meaning it doesn't get evaluated if the predicate is does not satisfy unless/when semantics.
+variations) is "lazy", meaning it doesn't get evaluated if the predicate does not satisfy unless/when semantics.
 
 ## Installing
 
@@ -52,7 +52,7 @@ println(unless(4 > 2){ Iterator.from(0).sum })
 
 println(Iterator.from(0).sum when 4 < 2)
 // #=> None
- 
+
 println(Iterator.from(0).sum unless 4 > 2)
 // #=> None
 ```
