@@ -57,6 +57,22 @@ class UnlessWhenSpec extends FunSpec with Matchers {
         val k = Iterator.from(0).sum when false
         k should be (None)
       }
+
+      describe("unless") {
+        it("should cause the expression to return None if the predicate is true") {
+          val k = 3 unless true
+          k should be(None)
+        }
+        it("should cause the expression to return Some(value) if the predicate is false") {
+          val k = 3 unless false
+          k should be(Some(3))
+        }
+        it("should be lazy") {
+          val k = Iterator.from(0).sum unless true
+          k should be(None)
+        }
+      }
+
     }
 
 

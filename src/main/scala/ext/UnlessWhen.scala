@@ -1,7 +1,7 @@
 package scala.ext
 
 import scala.language.experimental.macros
-
+import scala.reflect.macros.Context
 
 /**
  * Import the unless and when methods from here.
@@ -30,20 +30,44 @@ object UnlessWhenTrailing {
    */
   def unless[A](p: Boolean)(f: A): Option[A] = macro UnlessWhenMacros.unlessImp[A]
 
-  implicit def toTrailingConditional[A](f: => A) = new TrailingConditional(f)
+  /**
+   * Implicit conversion to a TrailingConditional[A] handled by a macro
+   *
+   * Note that since the conversion is delegated to a macro, the computation of the result is
+   * lazy (and won't happen unless the predicate satisfies unless/when semantics)
+   */
+  implicit def toTrailingConditional[A](f: A): scala.ext.UnlessWhenTrailing.TrailingConditional[A] = macro toTrailingConditionalImpl[A]
+
+  def toTrailingConditionalImpl[A: c.WeakTypeTag](c: Context)(f: c.Expr[A]): c.Expr[scala.ext.UnlessWhenTrailing.TrailingConditional[A]] = {
+    import c.universe._
+    val resultType = implicitly[c.WeakTypeTag[A]].tpe
+    val tree =
+      q"""
+         new TrailingConditional[${tq"$resultType"}] {
+           def when(p: Boolean) = UnlessWhenTrailing.when(p)($f)
+           def unless(p: Boolean) = UnlessWhenTrailing.unless(p)($f)
+         }
+       """
+    c.Expr[TrailingConditional[A]](tree)
+  }
+
+  /**
+   * Helper trait for supporting trailing conditionals.
+   */
+  trait TrailingConditional[A] {
+    /**
+     * Returns None if followed by a false-y expression otherwise
+     * returns the preceding expression in Some
+     */
+    def when(p: Boolean): Option[A]
+
+    /**
+     * Returns None if followed by a truth-y expression otherwise
+     * returns the preceding expression in Some
+     */
+    def unless(p: Boolean): Option[A]
+  }
 
 }
 
-sealed class TrailingConditional[A](f: => A) {
-  /**
-   * Returns None if followed by a false-y expression otherwise
-   * returns the preceding expression in Some
-   */
-  def when(p: Boolean) = UnlessWhenTrailing.when(p)(f)
 
-  /**
-   * Returns None if followed by a truth-y expression otherwise
-   * returns the preceding expression in Some
-   */
-  def unless(p: Boolean) = UnlessWhenTrailing.unless(p)(f)
-}
