@@ -17,19 +17,29 @@ object UnlessWhenMacros {
     c.Expr[Option[A]](q"if (!$p) Some($f) else None")
   }
 
-  def toTrailingConditionalImpl[A: c.WeakTypeTag](c: Context)(f: c.Expr[A]): c.Expr[TrailingConditional[A]] = {
+  def toTrailingWhenImpl[A: c.WeakTypeTag](c: Context)(f: c.Expr[A]): c.Expr[TrailingWhen[A]] = {
     import c.universe._
     val resultType = implicitly[c.WeakTypeTag[A]].tpe
     val tree =
       q"""
-         new TrailingConditional[${tq"$resultType"}] {
+         new TrailingWhen[${tq"$resultType"}] {
            def when(p: Boolean) = scala.ext.UnlessWhen.when(p)($f)
+         }
+       """
+    c.Expr[TrailingWhen[A]](tree)
+  }
+
+  def toTrailingUnlessImpl[A: c.WeakTypeTag](c: Context)(f: c.Expr[A]): c.Expr[TrailingUnless[A]] = {
+    import c.universe._
+    val resultType = implicitly[c.WeakTypeTag[A]].tpe
+    val tree =
+      q"""
+         new TrailingUnless[${tq"$resultType"}] {
            def unless(p: Boolean) = scala.ext.UnlessWhen.unless(p)($f)
          }
        """
-    c.Expr[TrailingConditional[A]](tree)
+    c.Expr[TrailingUnless[A]](tree)
   }
-
 }
 
 

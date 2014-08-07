@@ -8,6 +8,8 @@ crossScalaVersions := Seq("2.10.4", "2.11.2")
 
 crossVersion := CrossVersion.binary
 
+scalacOptions ++= Seq( "-unchecked", "-feature")
+
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(

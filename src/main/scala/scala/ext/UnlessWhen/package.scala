@@ -1,5 +1,6 @@
 package scala.ext
 
+import scala.language.implicitConversions
 import scala.language.experimental.macros
 /**
  * Created by Lloyd on 8/7/14.
@@ -37,11 +38,19 @@ package object UnlessWhen {
   def unless[A](p: Boolean)(f: A): Option[A] = macro UnlessWhenMacros.unlessImp[A]
 
   /**
-   * Implicit conversion to a TrailingConditional[A] handled by a macro
+   * Implicit conversion to a TrailingWhen[A] handled by a macro
    *
    * Note that since the conversion is delegated to a macro, the computation of the result is
-   * lazy (and won't happen unless the predicate satisfies unless/when semantics)
+   * lazy (and won't happen unless the predicate satisfies when semantics)
    */
-  implicit def toTrailingConditional[A](f: A): TrailingConditional[A] = macro UnlessWhenMacros.toTrailingConditionalImpl[A]
+  implicit def toTrailingWhen[A](f: A): TrailingWhen[A] = macro UnlessWhenMacros.toTrailingWhenImpl[A]
+
+  /**
+   * Implicit conversion to a TrailingUnless[A] handled by a macro
+   *
+   * Note that since the conversion is delegated to a macro, the computation of the result is
+   * lazy (and won't happen unless the predicate satisfies unless semantics)
+   */
+  implicit def toTrailingUnless[A](f: A): TrailingUnless[A] = macro UnlessWhenMacros.toTrailingUnlessImpl[A]
 
 }

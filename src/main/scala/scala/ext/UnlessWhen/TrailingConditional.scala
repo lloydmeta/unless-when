@@ -4,9 +4,9 @@ package scala.ext.UnlessWhen
  * Created by Lloyd on 8/7/14.
  */
 /**
- * Helper trait for supporting trailing conditionals.
+ * Helper traits for supporting trailing conditionals.
  */
-trait TrailingConditional[A] {
+trait TrailingWhen[A] {
   /**
    * Returns None if followed by a false-y expression otherwise
    * returns the preceding expression in Some
@@ -15,7 +15,9 @@ trait TrailingConditional[A] {
    * on the outcome of the predicate.
    */
   def when(p: Boolean): Option[A]
+}
 
+trait TrailingUnless[A] {
   /**
    * Returns None if followed by a truth-y expression otherwise
    * returns the preceding expression in Some.
