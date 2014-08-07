@@ -10,10 +10,6 @@ crossVersion := CrossVersion.binary
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
-lazy val unlessWhen = (project in file(".")).dependsOn(unlessWhenMacro)
-
-lazy val unlessWhenMacro = project
-
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "2.2.1" % "test"
