@@ -68,7 +68,7 @@ object UnlessWhen {
      * Returns None if followed by a truth-y expression otherwise
      * returns the preceding expression in Some.
      *
-     * * Note that the previous expression will be computed lazily depending
+     * Note that the previous expression will be computed lazily depending
      * on the outcome of the predicate.
      */
     def unless(p: Boolean): Option[A]
