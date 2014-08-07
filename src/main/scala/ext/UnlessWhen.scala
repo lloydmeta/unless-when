@@ -1,12 +1,13 @@
 package scala.ext
 
 import scala.language.experimental.macros
-import scala.reflect.macros.Context
+
 
 /**
  * Import the unless and when methods from here.
  */
-object UnlessWhen {
+object UnlessWhenTrailing {
+
   /**
    * Runs the function if the given predicate evaluates to true. Returns None if the predicate returns
    * false or the result of the function wrapped in a Some if it returns true.
@@ -16,7 +17,7 @@ object UnlessWhen {
    * @param p precedent to test with
    * @param f function to compute
    */
-  def when[A](p: Boolean)(f: A): Option[A] = macro whenImp[A]
+  def when[A](p: Boolean)(f: A): Option[A] = macro UnlessWhenMacros.whenImp[A]
 
   /**
    * Runs the function if the given predicate evaluates to false. Returns None if the predicate returns
@@ -27,15 +28,22 @@ object UnlessWhen {
    * @param p precedent to test with
    * @param f function to compute
    */
-  def unless[A](p: Boolean)(f: A): Option[A] = macro unlessImp[A]
+  def unless[A](p: Boolean)(f: A): Option[A] = macro UnlessWhenMacros.unlessImp[A]
 
-  def whenImp[A: c.WeakTypeTag](c: Context)(p: c.Expr[Boolean])(f: c.Expr[A]): c.Expr[Option[A]] = {
-    import c.universe._
-    c.Expr[Option[A]](q"if ($p) Some($f) else None")
-  }
+  implicit def toTrailingConditional[A](f: => A) = new TrailingConditional(f)
 
-  def unlessImp[A: c.WeakTypeTag](c: Context)(p: c.Expr[Boolean])(f: c.Expr[A]): c.Expr[Option[A]] = {
-    import c.universe._
-    c.Expr[Option[A]](q"if (!$p) Some($f) else None")
-  }
+}
+
+sealed class TrailingConditional[A](f: => A) {
+  /**
+   * Returns None if followed by a false-y expression otherwise
+   * returns the preceding expression in Some
+   */
+  def when(p: Boolean) = UnlessWhenTrailing.when(p)(f)
+
+  /**
+   * Returns None if followed by a truth-y expression otherwise
+   * returns the preceding expression in Some
+   */
+  def unless(p: Boolean) = UnlessWhenTrailing.unless(p)(f)
 }
