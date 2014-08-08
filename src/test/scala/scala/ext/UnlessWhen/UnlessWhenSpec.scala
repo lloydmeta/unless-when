@@ -1,4 +1,4 @@
-package scala.ext.UnlessWhen
+package scala.ext.unlesswhen
 
 import org.scalatest.{FunSpec, Matchers}
 

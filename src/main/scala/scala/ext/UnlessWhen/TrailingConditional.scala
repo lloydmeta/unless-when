@@ -1,4 +1,4 @@
-package scala.ext.UnlessWhen
+package scala.ext.unlesswhen
 
 /**
  * Created by Lloyd on 8/7/14.
