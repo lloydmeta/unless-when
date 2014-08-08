@@ -13,7 +13,7 @@ variations) is "lazy", meaning it doesn't get evaluated if the predicate does no
 Add the following to your `build.sbt`
 
 ```scala
-libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.2"
+libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.3"
 ```
 
 If the above does not work because it cannot be resolved, its likely because it hasn't been synced to Maven central yet.
@@ -22,7 +22,7 @@ In that case, download a SNAPSHOT release of the same version by adding this to 
 ```scala
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
-libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.2-SNAPSHOT"
+libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.3-SNAPSHOT"
 ```
 
 ## Example
