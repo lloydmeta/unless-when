@@ -10,10 +10,10 @@ import scala.language.experimental.macros
  * Import this package to get unless and when support in your code
  *
  * {{{
- * import scala.ext.UnlessWhen._
+ * import scala.ext.unlesswhen._
  * }}}
  */
-package object UnlessWhen {
+package object unlesswhen {
 
   /**
    * Runs the function if the given predicate evaluates to true. Returns None if the predicate returns
@@ -24,7 +24,7 @@ package object UnlessWhen {
    * @param p precedent to test with
    * @param f function to compute
    */
-  def when[A](p: Boolean)(f: A): Option[A] = macro UnlessWhenMacros.whenImp[A]
+  def when[A](p: Boolean)(f: A): Option[A] = macro Macros.whenImp[A]
 
   /**
    * Runs the function if the given predicate evaluates to false. Returns None if the predicate returns
@@ -35,7 +35,7 @@ package object UnlessWhen {
    * @param p precedent to test with
    * @param f function to compute
    */
-  def unless[A](p: Boolean)(f: A): Option[A] = macro UnlessWhenMacros.unlessImp[A]
+  def unless[A](p: Boolean)(f: A): Option[A] = macro Macros.unlessImp[A]
 
   /**
    * Implicit conversion to a TrailingWhen[A] handled by a macro
@@ -43,7 +43,7 @@ package object UnlessWhen {
    * Note that since the conversion is delegated to a macro, the computation of the result is
    * lazy (and won't happen unless the predicate satisfies when semantics)
    */
-  implicit def toTrailingWhen[A](f: A): TrailingWhen[A] = macro UnlessWhenMacros.toTrailingWhenImpl[A]
+  implicit def toTrailingWhen[A](f: A): TrailingWhen[A] = macro Macros.toTrailingWhenImpl[A]
 
   /**
    * Implicit conversion to a TrailingUnless[A] handled by a macro
@@ -51,6 +51,6 @@ package object UnlessWhen {
    * Note that since the conversion is delegated to a macro, the computation of the result is
    * lazy (and won't happen unless the predicate satisfies unless semantics)
    */
-  implicit def toTrailingUnless[A](f: A): TrailingUnless[A] = macro UnlessWhenMacros.toTrailingUnlessImpl[A]
+  implicit def toTrailingUnless[A](f: A): TrailingUnless[A] = macro Macros.toTrailingUnlessImpl[A]
 
 }

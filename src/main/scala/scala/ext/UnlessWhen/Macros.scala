@@ -1,11 +1,11 @@
-package scala.ext.UnlessWhen
+package scala.ext.unlesswhen
 
 import scala.reflect.macros._
 
 /**
  * Created by Lloyd on 8/7/14.
  */
-object UnlessWhenMacros {
+object Macros {
 
   def whenImp[A: c.WeakTypeTag](c: Context)(p: c.Expr[Boolean])(f: c.Expr[A]): c.Expr[Option[A]] = {
     import c.universe._
@@ -23,7 +23,7 @@ object UnlessWhenMacros {
     val tree =
       q"""
          new TrailingWhen[${tq"$resultType"}] {
-           def when(p: Boolean) = scala.ext.UnlessWhen.when(p)($f)
+           def when(p: Boolean) = if (p) Some($f) else None
          }
        """
     c.Expr[TrailingWhen[A]](tree)
@@ -35,7 +35,7 @@ object UnlessWhenMacros {
     val tree =
       q"""
          new TrailingUnless[${tq"$resultType"}] {
-           def unless(p: Boolean) = scala.ext.UnlessWhen.unless(p)($f)
+           def unless(p: Boolean) = if (!p) Some($f) else None
          }
        """
     c.Expr[TrailingUnless[A]](tree)

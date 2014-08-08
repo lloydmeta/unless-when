@@ -28,7 +28,7 @@ libraryDependencies += "com.beachape.extensions" %% "unless-when" % "0.0.2-SNAPS
 ## Example
 
 ```scala
-import scala.ext.UnlessWhen._
+import scala.ext.unlesswhen._
 
 println(when(4 < 2)(0))
 // #=> None
