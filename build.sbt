@@ -13,22 +13,8 @@ scalacOptions ++= Seq( "-unchecked", "-feature")
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "2.2.1" % "test"
 )
-
-libraryDependencies := {
-  CrossVersion.partialVersion(scalaVersion.value) match {
-    // if scala 2.11+ is used, quasiquotes are merged into scala-reflect
-    case Some((2, scalaMajor)) if scalaMajor >= 11 =>
-      libraryDependencies.value
-    // in Scala 2.10, quasiquotes are provided by macro paradise
-    case Some((2, 10)) =>
-      libraryDependencies.value ++ Seq(
-        compilerPlugin("org.scalamacros" % "paradise" % "2.0.0" cross CrossVersion.full),
-        "org.scalamacros" %% "quasiquotes" % "2.0.0" cross CrossVersion.binary)
-  }
-}
 
 publishTo <<= version { v: String =>
   val nexus = "https://oss.sonatype.org/"
