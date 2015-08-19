@@ -24,7 +24,9 @@ package object unlesswhen {
    * @param p precedent to test with
    * @param f function to compute
    */
-  def when[A](p: Boolean)(f: A): Option[A] = macro Macros.whenImp[A]
+  def when[A](p: Boolean)(f: => A): Option[A] = {
+    if(p) Option(f) else None
+  }
 
   /**
    * Runs the function if the given predicate evaluates to false. Returns None if the predicate returns
@@ -35,7 +37,9 @@ package object unlesswhen {
    * @param p precedent to test with
    * @param f function to compute
    */
-  def unless[A](p: Boolean)(f: A): Option[A] = macro Macros.unlessImp[A]
+  def unless[A](p: Boolean)(f: => A): Option[A] = {
+    if(!p) Option(f) else None
+  }
 
   /**
    * Implicit conversion to a TrailingWhen[A] handled by a macro
@@ -43,7 +47,11 @@ package object unlesswhen {
    * Note that since the conversion is delegated to a macro, the computation of the result is
    * lazy (and won't happen unless the predicate satisfies when semantics)
    */
-  implicit def toTrailingWhen[A](f: A): TrailingWhen[A] = macro Macros.toTrailingWhenImpl[A]
+  implicit def toTrailingWhen[A](f: => A): TrailingWhen[A] = new TrailingWhen[A] {
+    def when(p: Boolean): Option[A] = {
+      if(p) Option(f) else None
+    }
+  }
 
   /**
    * Implicit conversion to a TrailingUnless[A] handled by a macro
@@ -51,6 +59,9 @@ package object unlesswhen {
    * Note that since the conversion is delegated to a macro, the computation of the result is
    * lazy (and won't happen unless the predicate satisfies unless semantics)
    */
-  implicit def toTrailingUnless[A](f: A): TrailingUnless[A] = macro Macros.toTrailingUnlessImpl[A]
-
+  implicit def toTrailingUnless[A](f: => A): TrailingUnless[A] = new TrailingUnless[A] {
+    def unless(p: Boolean): Option[A] = {
+      if(!p) Option(f) else None
+    }
+  }
 }
